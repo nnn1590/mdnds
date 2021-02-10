@@ -15,7 +15,7 @@ namespace nds
     static const int Size = 0x200;
 
     Header() {};
-    Header(std::vector<uint8_t>& rom)
+    Header(std::vector<uint8_t> rom)
     {
       std::copy(rom.begin(), rom.begin() + Header::Size, std::back_inserter(m_header));
     }

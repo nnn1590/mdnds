@@ -121,7 +121,7 @@ namespace util
     return;
   }
 
-  inline void write_file(std::string filename, std::vector<uint8_t>& data, uint32_t count = 0)
+  inline void write_file(std::string filename, std::vector<uint8_t> data, uint32_t count = 0)
   {
     FILE *fp = fopen(filename.c_str(), "wb");
 
@@ -157,6 +157,24 @@ namespace util
 
       fclose(fp);
     }
+  }
+
+  //  swap_endian taken from StackOverflow
+  //  https://stackoverflow.com/questions/105252
+  template <typename T> T swap_endian(T u)
+  {
+    union
+    {
+      T u;
+      unsigned char u8[sizeof(T)];
+    } source, dest;
+
+    source.u = u;
+
+    for (size_t k = 0; k < sizeof(T); k++)
+      dest.u8[k] = source.u8[sizeof(T)-k - 1];
+
+    return dest.u;
   }
 
   template <typename T> inline T read(std::vector<uint8_t>& data, uint32_t offset = 0)
@@ -299,24 +317,6 @@ namespace util
     iss >> value;
 
     return value;
-  }
-
-  //  swap_endian taken from StackOverflow
-  //  https://stackoverflow.com/questions/105252
-  template <typename T> T swap_endian(T u)
-  {
-    union
-    {
-      T u;
-      unsigned char u8[sizeof(T)];
-    } source, dest;
-
-    source.u = u;
-
-    for (size_t k = 0; k < sizeof(T); k++)
-      dest.u8[k] = source.u8[sizeof(T)-k - 1];
-
-    return dest.u;
   }
 
   template<typename T> inline T rol(T x, uint32_t n)

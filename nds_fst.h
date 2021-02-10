@@ -53,7 +53,7 @@ namespace nds
     TableEntry(uint32_t offset, uint16_t first, uint16_t parent)
           : m_offset(offset), m_first_id(first), m_parent_id(parent) {};
 
-    TableEntry(std::vector<uint8_t>& data, uint32_t offset = 0)
+    TableEntry(std::vector<uint8_t> data, uint32_t offset = 0)
     {
       m_offset = util::read<uint32_t>(data, offset);
       m_first_id = util::read<uint16_t>(data, offset + 4);
